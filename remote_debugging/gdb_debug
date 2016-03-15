@@ -1,0 +1,23 @@
+DEBUGGING
+---------
+- copy gdb_server
+- service fwrules stop
+- code should be compiled with "-g" flag
+
+
+
+for remote debugging
+on host run :  ddd --debugger arm-fsl-linux-gnueabi-gdb ./zw_ta
+               Once dd opens run command :  target remote 192.168.0.108:4567 (SGw ip)
+on board run : gdbserver host:4567 ./zw_ta -l 0 (PC ip)
+
+valgrind --tool=memcheck --vgdb=yes --vgdb-error=0 host:4567 ./zw_ta -l 0
+[6:10:09 PM]  Vibhav Barad sent file gdbserver.
+
+- info threads  
+- thread apply all bt
+
+- ddd --debugger arm-none-linux-gnueabi-gdb ./WDTservice
+    - target remote 192.168.0.119:4567
+- service fwrules stop; /home/lyse/gdbserver 192.168.0.110:4567 /home/lyse/WDTservice -c 0
+

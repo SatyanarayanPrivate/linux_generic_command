@@ -1,0 +1,166 @@
+===============================================================================================================================
+Mosquitto sub-pub
+apt-get install mosquitto-clients
+===============================================================================================================================
+
+===============================================================================================================================
+Battery related info
+>> cat /sys/class/power_supply/
+===============================================================================================================================
+===============================================================================================================================
+send data to local host port
+- echo axact 28761 OK | nc localhost 50001
+===============================================================================================================================
+
+===============================================================================================================================
+valgrind
+- valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all ./ResourceMonitor 
+===============================================================================================================================
+
+===============================================================================================================================
+DEBUGGING
+---------
+- copy gdb_server
+- service fwrules stop
+- code should be compiled with "-g" flag
+
+
+
+for remote debugging
+on host run :  ddd --debugger arm-fsl-linux-gnueabi-gdb ./zw_ta
+               Once dd opens run command :  target remote 192.168.0.108:4567 (SGw ip)
+on board run : gdbserver host:4567 ./zw_ta -l 0 (PC ip)
+
+valgrind --tool=memcheck --vgdb=yes --vgdb-error=0 host:4567 ./zw_ta -l 0
+[6:10:09 PM]  Vibhav Barad sent file gdbserver.
+
+- info threads  
+- thread apply all bt
+
+- ddd --debugger arm-none-linux-gnueabi-gdb ./WDTservice
+    - target remote 192.168.0.119:4567
+- service fwrules stop; /home/lyse/gdbserver 192.168.0.110:4567 /home/lyse/WDTservice -c 0
+===============================================================================================================================
+
+===============================================================================================================================
+- make suspend 
+    - echo +60 > /sys/class/rtc/rtc0/wakealarm
+    - echo -n mem > /sys/power/state
+    
+- usb power control
+    - get list of connected devices
+        - $ cd /sys/bus/usb/devices/
+        - $ for device in $(ls /sys/bus/usb/devices/*/product); do echo $device;cat $device;done
+            - here we get connected devices list
+===============================================================================================================================
+            
+===============================================================================================================================
+
+git tag -a v2_1.3.7+1smartly1-beta1 -m 'sigterm added & multiple instaces handled'
+
+git push origin v2_1.3.7+1smartly1-beta1
+
+git clone git@koperasw.dyndns.tv:zwave_modbus_bridge.git /*this will download the compelete project from the git origin to your current directory*/
+
+<open the downloaded directory, do the changes in file/directory>
+
+git status /* will show you on which branch you are, will show the modified files, */
+
+git brach -a /* the first branch name with * will indicate your current brance, will show the list of branches in the project */
+
+git checkout <branch_name> /*this will change your current working branch to the specified branch name */
+
+git add <file_name> /*this will update the file that will be commited */
+
+git commit -m "<comment>" /* this will commit the added file with the specified comment */
+
+git push origin <branch_name>:<branch_name> /* this will push all the committed change made in the branch to the specified branch */
+
+
+git pull /* will download if there are changes in the branch you are working in the remote side, that is in origin */
+===============================================================================================================================
+
+
+===============================================================================================================================
+build-rootfs
+
+sudo apt-get install qemu-user-static debootstrap binfmt-support
+
+
+# mkdir test
+# sudo qemu-debootstrap --arch=armel jessie ./test http://http.debian.net/debian/
+# sudo cp /usr/bin/qemu-arm-static ./test/usr/bin/
+# sudo cp /etc/resolv.conf ./test/etc
+# sudo chroot ./test
+# cat >  /etc/apt/sources.list
+deb http://ftp.uk.debian.org/debian jessie main contrib non-free
+deb-src http://ftp.uk.debian.org/debian jessie main contrib non-free
+deb http://ftp.uk.debian.org/debian jessie-updates main contrib non-free
+deb-src http://ftp.uk.debian.org/debian jessie-updates main contrib non-free
+deb http://security.debian.org/debian-security jessie/updates main contrib non-free
+deb-src http://security.debian.org/debian-security jessie/updates main contrib
+echo "deb http://update.service.smartly.no/smartgateway/debian  kopera experimental/main" > /etc/apt/sources.list.d/kopera.list
+echo "deb http://update.service.smartly.no/lysesmart/debian testing main" > /etc/apt/sources.list.d/lysesmart.list
+
+# apt-get update
+===============================================================================================================================
+
+
+======================================================================================================================
+qemuArm
+
+-- working
+- sudo add-apt-repository ppa:linaro-maintainers/tools
+- sudo apt-get install linaro-image-tools qemu-user-static qemu-system
+- sudo apt-get install gcc-arm-linux-gnueabi g++-arm-linux-gnueabi
+- wget https://releases.linaro.org/11.11/ubuntu/oneiric-images/nano/linaro-o-nano-tar-20111121-0.tar.gz
+- wget https://releases.linaro.org/11.11/ubuntu/oneiric-images/nano/hwpack_linaro-vexpress_20111122-1_armel_supported.tar.gz
+- linaro-media-create --image_file vexpress.img --dev vexpress --binary linaro-o-nano-tar-20111121-0.tar.gz --hwpack hwpack_linaro-vexpress_20110302-0_armel_supported.tar.gz
+- sudo mkdir -p /mnt/tmp
+- sudo mount -o loop,offset=$((63*512)) vexpress.img /mnt/tmp
+- cp /mnt/tmp/uImage ./vmlinuz
+- cp /mnt/tmp/uInitrd ./initrd.img
+- qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -kernel ./vmlinuz -initrd ./initrd.img -redir tcp:2200::22 -m 512 -append "root=/dev/mmcblk0p2 vga=normal mem=512M devtmpfs.mount=0 rw" -drive file=vexpress.img,if=sd,cache=writeback
+- extract linaro-o-nano-tar-20111121-0.tar.gz
+
+
+
+-- working
+- sudo add-apt-repository ppa:linaro-maintainers/tools
+- sudo apt-get install linaro-image-tools qemu-user-static qemu-system
+- sudo apt-get install gcc-arm-linux-gnueabi g++-arm-linux-gnueabi
+- wget http://releases.linaro.org/platform/linaro-n/nano/alpha-3/linaro-natty-nano-tar-20110302-0.tar.gz 
+- wget http://releases.linaro.org/platform/linaro-n/hwpacks/alpha-3/hwpack_linaro-vexpress_20110302-0_armel_supported.tar.gz
+- linaro-media-create --image_file vexpress.img --dev vexpress --binary linaro-natty-nano-tar-20110302-0.tar.gz --hwpack hwpack_linaro-vexpress_20110302-0_armel_supported.tar.gz
+- sudo mount -o loop,offset=$((63*512)) vexpress.img /mnt/tmp
+- cp /mnt/tmp/uImage ./vmlinuz
+- cp /mnt/tmp/uInitrd ./initrd.img
+- qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -kernel ./vmlinuz -initrd ./initrd.img -redir tcp:2200::22 -m 512 -append "root=/dev/mmcblk0p2 vga=normal mem=512M devtmpfs.mount=0 rw" -drive file=vexpress.img,if=sd,cache=writeback
+
+======================================================================================================================
+
+======================================================================================================================
+battery related
+
+$cat /sys/kernel/battery_settings/battery_forced_charge
+    - set 1 to start charging
+$cat /sys/class/power_supply/smart-gw-battery/status
+    - get current voltage
+======================================================================================================================
+    
+======================================================================================================================
+Boot from PD
+make PD with ext2 partition
+
+SG U-Boot > setenv bootcmd_pd 'run bootargs_base bootargs_pd ; tftpboot 0x80800000 uImage ; bootm'
+SG U-Boot > setenv bootargs_pd 'setenv bootargs ${bootargs} root=/dev/sda1 ro  rootwait panic=4'
+SG U-Boot > setenv serverip 192.168.0.100
+SG U-Boot > setenv bootargs_base 'setenv bootargs console=ttymxc0,115200'
+SG U-Boot > setenv ipaddr 192.168.0.190
+SG U-Boot > setenv bootcmd 'run bootcmd_pd'
+SG U-Boot > saveenv 
+======================================================================================================================
+
+
+======================================================================================================================
+======================================================================================================================

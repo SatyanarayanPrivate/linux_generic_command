@@ -1,0 +1,19 @@
+sudo apt-get install qemu-user-static debootstrap binfmt-support
+
+
+# mkdir test
+# sudo qemu-debootstrap --arch=armel jessie ./test http://http.debian.net/debian/
+# sudo cp /usr/bin/qemu-arm-static ./test/usr/bin/
+# sudo cp /etc/resolv.conf ./test/etc
+# sudo chroot ./test
+# cat >  /etc/apt/sources.list
+deb http://ftp.uk.debian.org/debian jessie main contrib non-free
+deb-src http://ftp.uk.debian.org/debian jessie main contrib non-free
+deb http://ftp.uk.debian.org/debian jessie-updates main contrib non-free
+deb-src http://ftp.uk.debian.org/debian jessie-updates main contrib non-free
+deb http://security.debian.org/debian-security jessie/updates main contrib non-free
+deb-src http://security.debian.org/debian-security jessie/updates main contrib
+echo "deb http://update.service.smartly.no/smartgateway/debian  kopera experimental/main" > /etc/apt/sources.list.d/kopera.list
+echo "deb http://update.service.smartly.no/lysesmart/debian testing main" > /etc/apt/sources.list.d/lysesmart.list
+
+# apt-get update
