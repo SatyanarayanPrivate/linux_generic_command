@@ -72,6 +72,7 @@ Created Sunday 13 September 2015
 
 ==> Kernel
 	>> working
+	git clone git://github.com/beagleboard/kernel.git
 	>> build
 	~/kernel$ git checkout 3.8
 	~/kernel$ ./patch.sh
