@@ -53,6 +53,10 @@ Buildroot
         - updating operational kernel or rootfs.
 
 linaro rootfs
+    used for operational rootfs.
+    
+    
+    
     
     
     
