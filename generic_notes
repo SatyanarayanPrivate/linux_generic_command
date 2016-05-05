@@ -82,6 +82,7 @@ git commit -m "<comment>" /* this will commit the added file with the specified 
 
 git push origin <branch_name>:<branch_name> /* this will push all the committed change made in the branch to the specified branch */
 
+git push -u origin master:master
 
 git pull /* will download if there are changes in the branch you are working in the remote side, that is in origin */
 ===============================================================================================================================
