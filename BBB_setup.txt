@@ -18,6 +18,7 @@ Created Sunday 13 September 2015
 ==> Uboot
 	>> compiled but still to be run
 	>> http://www.twam.info/hardware/beaglebone-black/u-boot-on-beaglebone-black
+    - $ git clone git://git.denx.de/u-boot.git && cd u-boot
 	- $ make am335x_boneblack_defconfig
 	- $ ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- make
 	- Configuring U-Boot as uEnv.txt
@@ -44,11 +45,11 @@ Created Sunday 13 September 2015
 	- make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- beaglebone_defconfig
 	- make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- -j4
 	- make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- uImage dtbs LOADADDR=0x80008000 -j4
-    
+
 	>> copy tftpboot files
 	- cp arch/arm/boot/uImage uImage-BBB
 	- cp arch/arm/boot/dts/am335x-boneblack.dtb /tftpboot/ am335x-boneblack.dtb
-    
+
 	>> BBB tftpboot settings
 	- setenv ipaddr 192.168.0.250
 	- setenv serverip 192.168.0.251
@@ -62,7 +63,7 @@ Created Sunday 13 September 2015
 	/dev/mmcblk0p2          147456     7127039     3489792   83  Linux
 	/dev/mmcblk0p3         7136324    15635593     4249635   83  Linux
 
-	>> Internal eMMC        
+	>> Internal eMMC
 	/dev/mmcblk1p1   *        2048      198655       98304    e  W95 FAT16 (LBA)
 	/dev/mmcblk1p2          198656     7553023     3677184   83  Linux
 
@@ -86,15 +87,15 @@ Created Sunday 13 September 2015
 	~/kernel/kernel$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- INSTALL_MOD_PATH=rootfs modules_install
 	~/kernel/kernel$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- uImage-dtb.am335x-bone
 	~/kernel/kernel$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- uImage-dtb.am335x-boneblack
-    
+
 	>> boot from sd card
 	- copy uImage to /boot/ of sd card
-    
+
 	>> Bootfrom NFS
 	- cp uImage-dtb.am335x-boneblack /tftpboot/uImage-dtb
 	- setenv ipaddr 192.168.0.102;setenv serverip 192.168.0.101;tftpboot 0x80200000 uImage-dtb;setenv bootargs console=ttyO0,115200n8 root=/dev/mmcblk0p2 ro rootfstype=ext4 rootwait;bootm 0x80200000
-    
-    
+
+
 ===============================================================================================================================================
 ===============================================================================================================================================
 
@@ -104,7 +105,7 @@ Created Sunday 13 September 2015
 ==>> share internet (closed)
 	>> bbb console
 		- ssh 192.168.7.2 -l root
-		- ifconfig usb0 192.168.7.2   
+		- ifconfig usb0 192.168.7.2
 		- route add default gw 192.168.7.1
 	>> PC
 		- sudo su
@@ -124,13 +125,13 @@ Setup micro-sd card
 ==========================================================================
 >> working
 => http://downloads.angstrom-distribution.org/demo/beaglebone/
-	- with sample images 
-    
+	- with sample images
+
 	Download an img.gz or img.xz file from above e.g. Angstrom-Cloud9-IDE-eglibc-ipk-v2011.10-core-beaglebone-r0.img.gz (or a more recent version).
 	Unpack the image to the raw BeagleBone SD card.
-	NOTE: superuser privileges are required when unpacking the image. 
+	NOTE: superuser privileges are required when unpacking the image.
 	eg. for Linux:
-    
+
 	$ sudo -s
 	(type in your password)
 	# zcat Angstrom-Cloud9-IDE-eglibc-ipk-v2011.10-core-beaglebone-r0.img.gz > /dev/sdX
