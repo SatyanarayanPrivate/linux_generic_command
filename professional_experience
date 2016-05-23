@@ -6,20 +6,20 @@ Gateway
     /media/app/data
     operational rootfs - 1
     operational rootfs - 2
-    
+
 
 Z-wave Technology
     - Z-wave master device will communicate with Z-wave stack through UART.
     - Controller have access to program memory of Z-wave master device through SPI (for upgrading Z-wave master device).
-    - Controller have access to exeternal memory of Z-wave master device through SPI (for updating Z-wave master application content).
+    - Controller have access to external memory of Z-wave master device through SPI (for updating Z-wave master application content).
     - through SPI only we can access one at a time.
 
     - Few command class implementation from master device & slave devices.
         - with reference to Z-wave (from sigma) command classes are implemented.
     - firmware upgrade tool for slave devices.
         - using firmware upgrade command lass slave devices are updated.
-            - cloud server will send upgrade commad to Z-Wave master device by sending firmware file path.
-            - Validated downloaded I-hex file. 
+            - cloud server will send upgrade command to Z-Wave master device by sending firmware file path.
+            - Validated downloaded I-hex file.
             - After file validation Z-wave master stack will initiate firmware upgrade process of slave device.
                 - Send request to slave for firmware upgrade which includes check sum of I-hex file data and wait for ack from slave .
                 - On positive ack all firmware file content will be send.
@@ -27,14 +27,14 @@ Z-wave Technology
                 - and status will be replied back to Z-wave master stack.
             - upgrade status will be replied back to server.
     - Z-wave flasher tool to upgrade master device.
-        - cloud server will send upgrade commad to Z-Wave master device by sending firmware file path.
-        - Validated downloaded I-hex file. 
-        - Z-wave flaher tool will initiated.
+        - cloud server will send upgrade command to Z-Wave master device by sending firmware file path.
+        - Validated downloaded I-hex file.
+        - Z-wave flasher tool will initiated.
         - Enable programming mode of Z-wave master device.
         - write data to flash through sram of Z-wave master device.
-            - 
+            -
         - reset Z-wave master and start new firmware.
-    
+
 Watchdog service
     Things done in Watchdog service
         - Watchdog functionality that is reset Watchdog timer.
@@ -44,19 +44,18 @@ Watchdog service
                 - if ram usage is more then system will be rebooted.
         - service monitoring
             - through socket any process can be monitored using ping command.
-            - if service/ process failed to ping then apropriate action will be taken.
-            
-Buildroot 
+            - if service/ process failed to ping then appropriate action will be taken.
+
+Buildroot
     Used for recovery rootfs
-    - recovery rootfs has minimal fuctionalities
+    - recovery rootfs has minimal functionalities
         - connection manager
         - updating operational kernel or rootfs.
 
 linaro rootfs
     used for operational rootfs.
-    
-    
-    
-    
-    
-    
+
+
+
+
+
