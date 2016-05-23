@@ -1,3 +1,7 @@
+===============================================================================================================================
+serial tool
+$ microcom
+===============================================================================================================================
 
 ===============================================================================================================================
 Convert to pdf
@@ -23,7 +27,7 @@ send data to local host port
 
 ===============================================================================================================================
 valgrind
-- valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all ./ResourceMonitor 
+- valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all ./ResourceMonitor
 ===============================================================================================================================
 
 ===============================================================================================================================
@@ -43,7 +47,7 @@ on board run : gdbserver host:4567 ./zw_ta -l 0 (PC ip)
 valgrind --tool=memcheck --vgdb=yes --vgdb-error=0 host:4567 ./zw_ta -l 0
 [6:10:09 PM]  Vibhav Barad sent file gdbserver.
 
-- info threads  
+- info threads
 - thread apply all bt
 
 - ddd --debugger arm-none-linux-gnueabi-gdb ./WDTservice
@@ -52,17 +56,17 @@ valgrind --tool=memcheck --vgdb=yes --vgdb-error=0 host:4567 ./zw_ta -l 0
 ===============================================================================================================================
 
 ===============================================================================================================================
-- make suspend 
+- make suspend
     - echo +60 > /sys/class/rtc/rtc0/wakealarm
     - echo -n mem > /sys/power/state
-    
+
 - usb power control
     - get list of connected devices
         - $ cd /sys/bus/usb/devices/
         - $ for device in $(ls /sys/bus/usb/devices/*/product); do echo $device;cat $device;done
             - here we get connected devices list
 ===============================================================================================================================
-            
+
 ===============================================================================================================================
 
 git tag -a v2_1.3.7+1smartly1-beta1 -m 'sigterm added & multiple instaces handled'
@@ -139,7 +143,7 @@ qemuArm
 - sudo add-apt-repository ppa:linaro-maintainers/tools
 - sudo apt-get install linaro-image-tools qemu-user-static qemu-system
 - sudo apt-get install gcc-arm-linux-gnueabi g++-arm-linux-gnueabi
-- wget http://releases.linaro.org/platform/linaro-n/nano/alpha-3/linaro-natty-nano-tar-20110302-0.tar.gz 
+- wget http://releases.linaro.org/platform/linaro-n/nano/alpha-3/linaro-natty-nano-tar-20110302-0.tar.gz
 - wget http://releases.linaro.org/platform/linaro-n/hwpacks/alpha-3/hwpack_linaro-vexpress_20110302-0_armel_supported.tar.gz
 - linaro-media-create --image_file vexpress.img --dev vexpress --binary linaro-natty-nano-tar-20110302-0.tar.gz --hwpack hwpack_linaro-vexpress_20110302-0_armel_supported.tar.gz
 - sudo mount -o loop,offset=$((63*512)) vexpress.img /mnt/tmp
@@ -157,7 +161,7 @@ $cat /sys/kernel/battery_settings/battery_forced_charge
 $cat /sys/class/power_supply/smart-gw-battery/status
     - get current voltage
 ======================================================================================================================
-    
+
 ======================================================================================================================
 Boot from PD
 make PD with ext2 partition
@@ -168,7 +172,7 @@ SG U-Boot > setenv serverip 192.168.0.100
 SG U-Boot > setenv bootargs_base 'setenv bootargs console=ttymxc0,115200'
 SG U-Boot > setenv ipaddr 192.168.0.190
 SG U-Boot > setenv bootcmd 'run bootcmd_pd'
-SG U-Boot > saveenv 
+SG U-Boot > saveenv
 ======================================================================================================================
 
 
