@@ -126,6 +126,12 @@ Setup micro-sd card
 >> working
 => http://downloads.angstrom-distribution.org/demo/beaglebone/
 	- with sample images
+	- https://debian.beagleboard.org/images/
+        - get BBB-eMMC-flasher*.img.* file
+        - extract downloaded image to sd card.
+        - on flashing start 4 user led's will blink
+        - on completion flashing BBB board autmatically gets poweroff.
+	- http://elinux.org/Beagleboard:BeagleBoneBlack_Debian#Flashing_eMMC
 
 	Download an img.gz or img.xz file from above e.g. Angstrom-Cloud9-IDE-eglibc-ipk-v2011.10-core-beaglebone-r0.img.gz (or a more recent version).
 	Unpack the image to the raw BeagleBone SD card.
@@ -142,6 +148,7 @@ Setup micro-sd card
 	$ sudo -s
 	(type in your password)
 	# xz -dkc Angstrom-Cloud9-IDE-eglibc-ipk-v2011.10-core-beaglebone-r0.img.xz > /dev/sdX
+	# xz -dkc BBB-eMMC-flasher-debian-7.5-2014-05-14-2gb.img.xz > /dev/sdX
 	# exit
 
 	Insert SD card into BeagleBone and power it up.
